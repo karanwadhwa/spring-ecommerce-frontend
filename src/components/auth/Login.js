@@ -45,14 +45,14 @@ class Login extends Component {
             />
           </div>
 
-          <div class="form-outline mb-4">
+          <div className="form-outline mb-4">
             <label className="form-label" htmlFor="password">
               Password
             </label>
             <input
               type="password"
               name="password"
-              class="form-control"
+              className="form-control"
               value={password}
               onChange={this.handleTextChange}
             />
@@ -62,7 +62,7 @@ class Login extends Component {
             <span className="auth-error">{this.props.error}</span>
             <button
               type="submit"
-              class="btn btn-primary btn-block mb-4"
+              className="btn btn-primary btn-block mb-4"
               onClick={this.handleSubmit}
             >
               Login
