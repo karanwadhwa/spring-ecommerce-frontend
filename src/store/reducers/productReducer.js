@@ -1,9 +1,11 @@
 import {
   ADD_TO_CART,
+  ADD_TO_ORDERS,
   CLEAR_CART,
   LOGOUT,
   REMOVE_FROM_CART,
   SET_ALL_PRODUCTS,
+  SET_ORDERS,
 } from "../types";
 
 const initialState = {
@@ -27,6 +29,10 @@ export default (state = initialState, action) => {
       return { ...state, cart };
     case CLEAR_CART:
       return { ...state, cart: [] };
+    case SET_ORDERS:
+      return { ...state, orders: action.payload };
+    case ADD_TO_ORDERS:
+      return { ...state, orders: [...state.orders, action.payload] };
     case LOGOUT:
       return initialState;
     default:

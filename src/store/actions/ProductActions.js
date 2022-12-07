@@ -5,6 +5,7 @@ import {
   CLEAR_CART,
   REMOVE_FROM_CART,
   SET_ALL_PRODUCTS,
+  SET_ORDERS,
 } from "../types";
 
 export const getAllProducts = () => (dispatch) => {
@@ -52,4 +53,16 @@ export const orderCheckout = (cart, userid) => (dispatch) => {
       dispatch(clearCart);
     })
     .catch((err) => console.log(err, err.response));
+};
+
+export const getAllOrders = (userid) => (dispatch) => {
+  axios
+    .get(`${apiURL}/user/${userid}/orders`)
+    .then((response) => {
+      dispatch({ type: SET_ORDERS, payload: response.data });
+    })
+    .catch((error) => {
+      console.log(error, error.response);
+      alert("Error fetching orders!");
+    });
 };
