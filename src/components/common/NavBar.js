@@ -19,8 +19,15 @@ const NavBar = (props) => {
         </Link>
       </div>
       <div className="col-auto">
+        <Link to="/orders">
+          <button type="button" className="btn btn-outline-primary">
+            Orders
+          </button>
+        </Link>
+      </div>
+      <div className="col-auto">
         <Link to="/cart">
-          <button type="button" className="btn btn-outline-success">
+          <button type="button" className="btn btn-outline-primary">
             Cart
           </button>
         </Link>

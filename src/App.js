@@ -6,6 +6,7 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Cart from "./components/cart/Cart";
 import Dashboard from "./components/dashboard/Dashboard";
+import Orders from "./components/orders/Orders";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
@@ -25,6 +26,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
             </ProtectedRoute>
           }
         />
