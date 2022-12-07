@@ -1,4 +1,4 @@
-import { SET_AUTH_ERROR, SET_AUTH_USER } from "../types";
+import { LOGOUT, SET_AUTH_ERROR, SET_AUTH_USER } from "../types";
 
 const initialState = {
   error: "",
@@ -11,6 +11,8 @@ export default (state = initialState, action) => {
       return { ...state, error: action.payload };
     case SET_AUTH_USER:
       return { ...state, error: "", user: action.payload };
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { redirect } from "react-router-dom";
 import { apiURL } from "../../variable";
-import { SET_AUTH_ERROR, SET_AUTH_USER } from "../types";
+import { LOGOUT, SET_AUTH_ERROR, SET_AUTH_USER } from "../types";
 
 export const loginUser = (email, password) => (dispatch) => {
   dispatch({ type: SET_AUTH_ERROR, payload: "" });
@@ -26,4 +27,9 @@ export const signupUser = (payload) => (dispatch) => {
     .catch((err) => {
       dispatch({ type: SET_AUTH_ERROR, payload: err.response?.data?.error });
     });
+};
+
+export const logout = () => {
+  redirect("/login");
+  return { type: LOGOUT };
 };
