@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
-class ProtectedRoute extends Component {
-  render() {
-    const { user, children } = this.props;
+export const ProtectedRoute = (props) => {
+  const params = useParams();
+  const { user, children } = props;
 
-    return !!user ? children : <Navigate to="/login" replace={true} />;
-  }
-}
+  return !!user ? (
+    React.cloneElement(children, { params })
+  ) : (
+    <Navigate to="/login" replace={true} />
+  );
+};
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
