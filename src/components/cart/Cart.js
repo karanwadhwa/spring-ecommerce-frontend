@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { addToCart, orderCheckout, removeFromCart } from "../../store/actions";
 import NavBar from "../common/NavBar";
 
@@ -106,16 +107,18 @@ class Cart extends Component {
           <h5 className="col">Total</h5>
           <h5 className="col text-end">${cartTotal.toFixed(2)}</h5>
         </div>
-        <div className="row">
-          <button
-            type="button"
-            className="btn btn-outline-primary mt-4 col-3 ms-auto me-2"
-            onClick={() =>
-              orderCheckout({ cartTotal, items: cart }, user.userid)
-            }
-          >
-            Checkout
-          </button>
+        <div className="row text-end">
+          <Link to="/orders">
+            <button
+              type="button"
+              className="btn btn-outline-primary mt-4 col-3 ms-auto me-2"
+              onClick={() =>
+                orderCheckout({ cartTotal, items: cart }, user.userid)
+              }
+            >
+              Checkout
+            </button>
+          </Link>
         </div>
       </div>
     );

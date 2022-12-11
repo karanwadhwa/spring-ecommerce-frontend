@@ -35,20 +35,22 @@ class Orders extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.orders.map((order) => (
+              {this.props.orders.reverse().map((order) => (
                 <tr key={order.orderId}>
                   <td>{order.orderId}</td>
                   <td>{new Date(order.createdOn).toLocaleString()}</td>
                   <td>{order.status}</td>
                   <td>${order.orderTotal}</td>
                   <td>
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary"
-                      style={{ width: "80%" }}
-                    >
-                      View
-                    </button>
+                    <Link to={`/order/${order.orderId}`}>
+                      <button
+                        type="button"
+                        className="btn btn-outline-primary"
+                        style={{ width: "80%" }}
+                      >
+                        View
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               ))}

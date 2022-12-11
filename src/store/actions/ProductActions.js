@@ -2,6 +2,7 @@ import axios from "axios";
 import { apiURL } from "../../variable";
 import {
   ADD_TO_CART,
+  ADD_TO_ORDERS,
   CLEAR_CART,
   REMOVE_FROM_CART,
   SET_ALL_PRODUCTS,
@@ -33,24 +34,26 @@ export const clearCart = () => {
 };
 
 export const orderCheckout = (cart, userid) => (dispatch) => {
-  console.log(cart, userid);
   const orderTotal = parseFloat(cart.cartTotal.toFixed(2));
-  const status = "booked";
-  const items = cart.items.forEach(({ name, price, cartQuantity }) => ({
-    name,
-    price,
-    quantity: cartQuantity,
-    totalPrice: parseFloat((cartQuantity * price).toFixed(2)),
-  }));
-  axios
-    .put(`${apiURL}/user/${userid}/order/create`, {
-      items,
-      status,
-      orderTotal,
+  const status = "completed";
+  const items = cart.items.map(
+    ({ name, price, cartQuantity, id, seller, thumbnail_url }) => ({
+      name,
+      price,
+      quantity: cartQuantity,
+      totalPrice: parseFloat((cartQuantity * price).toFixed(2)),
+      productId: id,
+      sellerId: seller,
+      thumbnail_url: thumbnail_url,
     })
+  );
+  const payload = { orderTotal, status, items };
+  axios
+    .put(`${apiURL}/user/${userid}/order/create`, payload)
     .then((res) => {
       console.log(res);
-      dispatch(clearCart);
+      dispatch({ type: CLEAR_CART });
+      dispatch({ type: ADD_TO_ORDERS, payload: res.data });
     })
     .catch((err) => console.log(err, err.response));
 };
