@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Navigate, redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { loginUser } from "../../store/actions/AuthActions";
 
 import "./login.css";
@@ -58,15 +58,18 @@ class Login extends Component {
             />
           </div>
 
-          <div className="d-grid">
+          <div className="d-grid mb-4 text-center">
             <span className="auth-error">{this.props.error}</span>
             <button
               type="submit"
-              className="btn btn-primary btn-block mb-4"
+              className="btn btn-primary btn-block mb-2"
               onClick={this.handleSubmit}
             >
               Login
             </button>
+            <Link to="/signup" style={{ textDecoration: "none" }}>
+              <span className="text-center">Create an account</span>
+            </Link>
           </div>
         </form>
       </div>
