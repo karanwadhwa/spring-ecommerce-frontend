@@ -18,20 +18,33 @@ const NavBar = (props) => {
           </button>
         </Link>
       </div>
-      <div className="col-auto">
-        <Link to="/orders">
-          <button type="button" className="btn btn-outline-primary">
-            Orders
-          </button>
-        </Link>
-      </div>
-      <div className="col-auto">
-        <Link to="/cart">
-          <button type="button" className="btn btn-outline-primary">
-            Cart
-          </button>
-        </Link>
-      </div>
+      {props.usertype === "customer" && (
+        <div className="col-auto">
+          <Link to="/orders">
+            <button type="button" className="btn btn-outline-primary">
+              Orders
+            </button>
+          </Link>
+        </div>
+      )}
+      {props.usertype === "customer" && (
+        <div className="col-auto">
+          <Link to="/cart">
+            <button type="button" className="btn btn-outline-primary">
+              Cart
+            </button>
+          </Link>
+        </div>
+      )}
+      {props.usertype === "seller" && (
+        <div className="col-auto">
+          <Link to="/product/new">
+            <button type="button" className="btn btn-outline-primary">
+              New Product
+            </button>
+          </Link>
+        </div>
+      )}
       <div className="col-auto">
         <button type="button" className="btn btn-danger" onClick={props.logout}>
           Logout
@@ -41,7 +54,9 @@ const NavBar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  usertype: state.auth.user.usertype,
+});
 
 const mapDispatchToProps = { logout };
 
