@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createProduct } from "../../store/actions";
+import { createProduct, updateProduct } from "../../store/actions";
 import NavBar from "../common/NavBar";
 import ProductCard from "../dashboard/ProductCard";
 
@@ -9,24 +9,32 @@ class NewProduct extends Component {
   constructor(props) {
     super(props);
 
+    const { searchParams } = this.props;
+
     this.state = {
-      name: "",
-      quantity: 1,
-      price: 0,
+      name: searchParams.get("name") ?? "",
+      quantity: parseInt(searchParams.get("quantity")) ?? 1,
+      price: parseInt(searchParams.get("price")) ?? 0,
       thumbnail_url:
+        searchParams.get("thumbnail_url") ??
         "https://curbside.ph/assets/uploads/2022/06/curbside-ph.jpg",
-      description: "",
-      category: "",
+      description: searchParams.get("description") ?? "",
+      category: searchParams.get("category") ?? "",
     };
   }
 
   handleInput = (event) =>
     this.setState({ [event.target.name]: event.target.value });
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const product = { ...this.state, seller: this.props.user.userid };
-    this.props.createProduct(product);
+  handleSubmit = () => {
+    const { editing, user, createProduct, updateProduct, searchParams } =
+      this.props;
+    const product = { ...this.state, seller: user.userid };
+    if (editing) {
+      product.id = parseInt(searchParams.get("id"));
+      if (!product.id) alert("Error updating product");
+      else updateProduct(product);
+    } else createProduct(product);
   };
 
   render() {
@@ -122,23 +130,46 @@ class NewProduct extends Component {
               <textarea
                 className="form-control"
                 id="exampleFormControlTextarea1"
-                rows="3"
+                rows="5"
                 name="description"
-              >
-                {description}
-              </textarea>
+                value={description}
+                onChange={this.handleInput}
+              />
             </div>
 
-            <div className="mb-4 text-end">
-              <span className="auth-error">{this.props.error}</span>
-
+            <div className="text-end">
               <Link to="/">
                 <button
-                  type="submit"
-                  className="btn btn-primary mb-2"
+                  type="button"
+                  className="btn btn-outline-primary mb-2 me-4"
+                >
+                  Cancel
+                </button>
+              </Link>
+              {this.props.editing && (
+                <button
+                  type="button"
+                  className="btn btn-outline-danger mb-2 me-4"
+                  onClick={() =>
+                    this.setState({ quantity: 0 }, this.handleSubmit)
+                  }
+                >
+                  Mark out of Stock
+                </button>
+              )}
+              <Link to="/">
+                <button
+                  type="button"
+                  className={
+                    this.props.editing
+                      ? "btn btn-success mb-2"
+                      : "btn btn-primary mb-2"
+                  }
                   onClick={this.handleSubmit}
                 >
-                  Create Product Listing
+                  {this.props.editing
+                    ? "Update Product Listing"
+                    : "Create Product Listing"}
                 </button>
               </Link>
             </div>
@@ -153,6 +184,6 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-const mapDispatchToProps = { createProduct };
+const mapDispatchToProps = { createProduct, updateProduct };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewProduct);
