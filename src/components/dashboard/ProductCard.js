@@ -1,8 +1,27 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { addToCart } from "../../store/actions";
 
-export const ProductCard = ({ product, addToCart, cart }) => {
+const assembleEditURL = (product) => {
+  const url = new URL("/product/edit", "https://localhost:3000/");
+  url.searchParams.set("id", product.id);
+  url.searchParams.set("name", product.name);
+  url.searchParams.set("price", product.price);
+  url.searchParams.set("quantity", product.quantity);
+  url.searchParams.set("category", product.category);
+  url.searchParams.set("thumbnail_url", product.thumbnail_url);
+  url.searchParams.set("description", product.description);
+  return url.search;
+};
+
+export const ProductCard = ({
+  product,
+  addToCart,
+  cart,
+  disableButton = false,
+  editButton = false,
+}) => {
   return (
     <div className="card">
       <img
@@ -16,7 +35,16 @@ export const ProductCard = ({ product, addToCart, cart }) => {
       <div className="card-body">
         <h5 className="card-title">{product.name}</h5>
         <h6 className="text-muted mb2">${product.price}</h6>
-        {cart.some((i) => i.id === product.id) ? (
+        {editButton ? (
+          <Link to={`/product/edit${assembleEditURL(product)}`}>
+            <button
+              className="btn btn-success"
+              // onClick={() => addToCart(product, 1)}
+            >
+              Edit Product
+            </button>
+          </Link>
+        ) : cart.some((i) => i.id === product.id) ? (
           <button className="btn btn-outline-primary" disabled>
             Added to Cart
           </button>
@@ -24,6 +52,7 @@ export const ProductCard = ({ product, addToCart, cart }) => {
           <button
             className="btn btn-primary"
             onClick={() => addToCart(product, 1)}
+            disabled={disableButton}
           >
             Add to Cart
           </button>
