@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 
 export const ProtectedRoute = (props) => {
   const params = useParams();
+  const [searchParams] = useSearchParams();
   const { user, children } = props;
 
   return !!user ? (
-    React.cloneElement(children, { params })
+    React.cloneElement(children, { params, searchParams })
   ) : (
     <Navigate to="/login" replace={true} />
   );
