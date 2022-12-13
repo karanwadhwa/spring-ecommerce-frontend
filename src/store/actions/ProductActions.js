@@ -21,6 +21,18 @@ export const getAllProducts = () => (dispatch) => {
     });
 };
 
+export const getMyProducts = (sellerid) => (dispatch) => {
+  axios
+    .get(`${apiURL}/product/find-by-seller/${sellerid}`)
+    .then((response) => {
+      dispatch({ type: SET_ALL_PRODUCTS, payload: response.data });
+    })
+    .catch((error) => {
+      console.log(error, error.response);
+      alert("Error fetching products!");
+    });
+};
+
 export const addToCart = (product, cartQuantity) => {
   return { type: ADD_TO_CART, payload: { ...product, cartQuantity } };
 };
@@ -68,4 +80,18 @@ export const getAllOrders = (userid) => (dispatch) => {
       console.log(error, error.response);
       alert("Error fetching orders!");
     });
+};
+
+export const createProduct = (product) => (dispatch) => {
+  axios
+    .post(`${apiURL}/product/create`, product)
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
+};
+
+export const updateProduct = (product) => (dispatch) => {
+  axios
+    .put(`${apiURL}/product/update`, product)
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
 };
