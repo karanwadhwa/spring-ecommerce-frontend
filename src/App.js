@@ -7,7 +7,9 @@ import Signup from "./components/auth/Signup";
 import Cart from "./components/cart/Cart";
 import Dashboard from "./components/dashboard/Dashboard";
 import Orders from "./components/orders/Orders";
+import OrderPage from "./components/orders/OrderPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import NewProduct from "./components/products/NewProduct";
 
 function App() {
   return (
@@ -34,6 +36,30 @@ function App() {
           element={
             <ProtectedRoute>
               <Orders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/order/:id"
+          element={
+            <ProtectedRoute>
+              <OrderPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/product/new"
+          element={
+            <ProtectedRoute>
+              <NewProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/product/edit"
+          element={
+            <ProtectedRoute>
+              <NewProduct editing />
             </ProtectedRoute>
           }
         />
