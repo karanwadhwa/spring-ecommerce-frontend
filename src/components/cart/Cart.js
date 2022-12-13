@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart, orderCheckout, removeFromCart } from "../../store/actions";
+import AddNewAddress from "../common/AddNewAddress";
+import AddressCard from "../common/AddressCard";
 import NavBar from "../common/NavBar";
 
 class Cart extends Component {
@@ -11,6 +13,7 @@ class Cart extends Component {
     this.state = {
       cartTotal: 0,
       cartQuantity: 0,
+      address: {},
     };
   }
 
@@ -94,11 +97,14 @@ class Cart extends Component {
   );
 
   render() {
-    const { cartTotal } = this.state;
+    const { cartTotal, address } = this.state;
     const { cart, orderCheckout, user } = this.props;
+    const checkoutEnabled = cart.length > 0 && !!this.state.address.street;
+
     return (
       <div className="container mb-4">
         <NavBar />
+        <div className="h3">Cart</div>
         <ul className="list-group list-group-flush">
           {cart.map(this.renderItem)}
         </ul>
@@ -107,18 +113,41 @@ class Cart extends Component {
           <h5 className="col">Total</h5>
           <h5 className="col text-end">${cartTotal.toFixed(2)}</h5>
         </div>
+        <hr />
+        <h6 className="col mt-4 mb-2">Shipping Address:</h6>
+        <div className="row row-cols-4">
+          {user.addresses.map((add) => (
+            <div className="col">
+              <AddressCard
+                showButton
+                address={add}
+                // eslint-disable-next-line
+                buttonText={address == add ? "Selected" : "Select"}
+                onButtonClick={() => this.setState({ address: add })}
+                // eslint-disable-next-line
+                disableButton={address == add}
+              />
+            </div>
+          ))}
+        </div>
+        <AddNewAddress />
         <div className="row text-end">
-          <Link to="/orders">
-            <button
-              type="button"
-              className="btn btn-outline-primary mt-4 col-3 ms-auto me-2"
-              onClick={() =>
-                orderCheckout({ cartTotal, items: cart }, user.userid)
-              }
-            >
-              Checkout
-            </button>
-          </Link>
+          {checkoutEnabled && (
+            <Link to="/orders">
+              <button
+                type="button"
+                className="btn btn-outline-primary mt-4 col-3 ms-auto me-2"
+                onClick={() =>
+                  orderCheckout(
+                    { cartTotal, items: cart, address },
+                    user.userid
+                  )
+                }
+              >
+                Checkout
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     );
