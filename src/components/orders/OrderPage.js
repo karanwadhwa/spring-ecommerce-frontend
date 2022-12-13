@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart, orderCheckout, removeFromCart } from "../../store/actions";
+import { apiURL } from "../../variable";
 import NavBar from "../common/NavBar";
 
 class OrderPage extends Component {
@@ -77,6 +78,19 @@ class OrderPage extends Component {
                   {order.status}
                 </span>
               </h5>
+              <a
+                href={`${apiURL}/order/invoice/${order.orderId}`}
+                alt="download invoice"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <button
+                  type="button"
+                  className="btn btn-outline-primary mt-2 col-3 ms-auto"
+                >
+                  Download Invoice
+                </button>
+              </a>
             </div>
             {order.items?.map(this.renderItems)}
             <div className="row ms-1">
