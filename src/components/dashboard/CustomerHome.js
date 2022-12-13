@@ -9,7 +9,6 @@ class CustomerHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: this.props.products.allItems,
       searchTerm: "",
     };
   }
@@ -35,7 +34,7 @@ class CustomerHome extends Component {
           className="form-control me-2 mb-3"
         />
         <div className="row row-cols-4">
-          {this.state.products.map((product) => (
+          {this.props.products.allItems.map((product) => (
             <div key={product.id} className="col mb-3">
               <ProductCard product={product} />
             </div>
