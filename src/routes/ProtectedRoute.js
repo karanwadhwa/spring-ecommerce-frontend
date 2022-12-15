@@ -11,7 +11,7 @@ export const ProtectedRoute = (props) => {
     <div>
       {apiError && (
         <div
-          class="alert alert-danger"
+          className="alert alert-danger"
           role="alert"
           style={{ position: "absolute", top: 100, right: 20, zIndex: 100 }}
         >

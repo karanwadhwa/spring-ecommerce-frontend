@@ -8,16 +8,16 @@ const AddressCard = ({
   disableButton,
 }) => {
   return (
-    <div class="card">
-      <div class="card-body">
-        <p class="card-text">
+    <div className="card">
+      <div className="card-body">
+        <p className="card-text">
           {address.apt}, {address.street}, {address.city}, {address.country} -{" "}
           {address.pin}
         </p>
         {showButton && (
           <button
             type="button"
-            class="btn btn-primary"
+            className="btn btn-primary"
             onClick={onButtonClick}
             disabled={disableButton}
           >

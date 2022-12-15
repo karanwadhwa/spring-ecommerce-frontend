@@ -74,7 +74,7 @@ class OrderPage extends Component {
               <h5>Date: {new Date(order.createdOn).toLocaleString()}</h5>
               <h5>
                 Status:{" "}
-                <span class="badge bg-success text-capitalize">
+                <span className="badge bg-success text-capitalize">
                   {order.status}
                 </span>
               </h5>
