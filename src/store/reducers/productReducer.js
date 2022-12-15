@@ -14,6 +14,7 @@ const initialState = {
   orders: [],
 };
 
+// eslint-disable-next-line
 export default (state = initialState, action) => {
   let cart = [...state.cart];
   switch (action.type) {
@@ -36,6 +37,6 @@ export default (state = initialState, action) => {
     case LOGOUT:
       return initialState;
     default:
-      return initialState;
+      return state;
   }
 };

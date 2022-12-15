@@ -7,5 +7,6 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const SET_ORDERS = "SET_ORDERS";
 export const ADD_TO_ORDERS = "ADD_TO_ORDERS";
+export const API_ERROR = "API_ERROR";
 
 export const LOGOUT = "LOGOUT";
