@@ -18,6 +18,14 @@ const NavBar = (props) => {
           </button>
         </Link>
       </div>
+
+      <div className="col-auto">
+        <Link to="/profile">
+          <button type="button" className="btn btn-outline-primary">
+            Profile
+          </button>
+        </Link>
+      </div>
       {props.usertype === "customer" && (
         <div className="col-auto">
           <Link to="/orders">

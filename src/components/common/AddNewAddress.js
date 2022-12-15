@@ -86,7 +86,7 @@ const AddNewAddress = (isEditing = false, address) => {
           </div>
         )}
         <button
-          type="submit"
+          type="button"
           className="btn btn-outline-primary mt-2"
           onClick={(e) => {
             e.preventDefault();

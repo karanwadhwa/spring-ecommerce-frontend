@@ -10,6 +10,7 @@ import Orders from "./components/orders/Orders";
 import OrderPage from "./components/orders/OrderPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import NewProduct from "./components/products/NewProduct";
+import Profile from "./components/dashboard/Profile";
 
 function App() {
   return (
@@ -20,6 +21,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
