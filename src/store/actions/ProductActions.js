@@ -59,7 +59,7 @@ export const orderCheckout = (cart, userid) => (dispatch) => {
       thumbnail_url: thumbnail_url,
     })
   );
-  const payload = { orderTotal, status, items };
+  const payload = { orderTotal, status, items, address: cart.address };
   axios
     .put(`${apiURL}/user/${userid}/order/create`, payload)
     .then((res) => {
