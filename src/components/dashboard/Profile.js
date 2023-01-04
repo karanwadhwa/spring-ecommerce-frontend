@@ -81,24 +81,24 @@ const Profile = () => {
             Edit Profile
           </button>
         )}
-        {user.usertype === "customer" && (
-          <div className="row mt-3">
-            <div className="col">
-              <label className="form-label" htmlFor="email">
-                Addresses
-              </label>
-              <div className="row">
-                {user.addresses.map((add) => (
-                  <div className="col">
-                    <AddressCard showButton={false} address={add} />
-                  </div>
-                ))}
-              </div>
-              <AddNewAddress />
-            </div>
-          </div>
-        )}
       </form>
+      {user.usertype === "customer" && (
+        <div className="row mt-3">
+          <div className="col-8">
+            <label className="form-label" htmlFor="email">
+              Addresses
+            </label>
+            <div className="row">
+              {user.addresses.map((add) => (
+                <div className="col">
+                  <AddressCard showButton={false} address={add} />
+                </div>
+              ))}
+            </div>
+            <AddNewAddress />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

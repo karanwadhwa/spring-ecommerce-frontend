@@ -11,6 +11,8 @@ import OrderPage from "./components/orders/OrderPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import NewProduct from "./components/products/NewProduct";
 import Profile from "./components/dashboard/Profile";
+import ViewProduct from "./components/products/ViewProduct";
+import SellerStore from "./components/products/SellerStore";
 
 function App() {
   return (
@@ -65,6 +67,14 @@ function App() {
           }
         />
         <Route
+          path="/product/:id"
+          element={
+            <ProtectedRoute>
+              <ViewProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/product/edit"
           element={
             <ProtectedRoute>
@@ -72,8 +82,24 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/seller/:id"
+          element={
+            <ProtectedRoute>
+              <SellerStore />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route
+          path="*"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

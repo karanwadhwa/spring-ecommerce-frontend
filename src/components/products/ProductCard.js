@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart } from "../../store/actions";
 
-const assembleEditURL = (product) => {
+export const assembleEditURL = (product) => {
   const url = new URL("/product/edit", "https://localhost:3000/");
   url.searchParams.set("id", product.id);
   url.searchParams.set("name", product.name);
@@ -23,7 +23,8 @@ export const ProductCard = ({
   editButton = false,
 }) => {
   return (
-    <div className="card">
+    <div className="card" style={{ height: disableButton ? "" : "100%" }}>
+      {/* <Link to={`/product/${product.id}`}> */}
       <img
         src={
           product.thumbnail_url ??
@@ -32,8 +33,14 @@ export const ProductCard = ({
         alt="product_image"
         className="card-img-to rounded-top"
       />
+      {/* </Link> */}
       <div className="card-body">
-        <h5 className="card-title">{product.name}</h5>
+        <Link
+          to={`/product/${product.id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <h5 className="card-title">{product.name}</h5>
+        </Link>
         <h6 className="text-muted mb2">${product.price}</h6>
         {editButton ? (
           <Link to={`/product/edit${assembleEditURL(product)}`}>
@@ -44,6 +51,10 @@ export const ProductCard = ({
               Edit Product
             </button>
           </Link>
+        ) : product.quantity === 0 ? (
+          <button className="btn btn-danger" disabled>
+            Sold out
+          </button>
         ) : cart.some((i) => i.id === product.id) ? (
           <button className="btn btn-outline-primary" disabled>
             Added to Cart

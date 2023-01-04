@@ -8,8 +8,11 @@ const AddressCard = ({
   disableButton,
 }) => {
   return (
-    <div className="card">
-      <div className="card-body">
+    <div className="card mb-4" style={{ height: "90%" }}>
+      <div
+        className="card-body d-flex justify-content-between"
+        style={{ flexDirection: "column" }}
+      >
         <p className="card-text">
           {address.apt}, {address.street}, {address.city}, {address.country} -{" "}
           {address.pin}

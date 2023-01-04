@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createProduct, updateProduct } from "../../store/actions";
 import NavBar from "../common/NavBar";
-import ProductCard from "../dashboard/ProductCard";
+import ProductCard from "./ProductCard";
 
 class NewProduct extends Component {
   constructor(props) {
@@ -13,8 +13,12 @@ class NewProduct extends Component {
 
     this.state = {
       name: searchParams.get("name") ?? "",
-      quantity: parseInt(searchParams.get("quantity")) ?? 1,
-      price: parseInt(searchParams.get("price")) ?? 0,
+      quantity: !!searchParams.get("quantity")
+        ? parseInt(searchParams.get("quantity"))
+        : 1,
+      price: !!searchParams.get("price")
+        ? parseInt(searchParams.get("price"))
+        : 0,
       thumbnail_url:
         searchParams.get("thumbnail_url") ??
         "https://curbside.ph/assets/uploads/2022/06/curbside-ph.jpg",
@@ -40,6 +44,7 @@ class NewProduct extends Component {
   render() {
     const { name, quantity, price, thumbnail_url, category, description } =
       this.state;
+    const editing = !!this.props?.searchParams?.get("name");
     return (
       <div className="container">
         <NavBar />
@@ -49,7 +54,7 @@ class NewProduct extends Component {
             <ProductCard product={this.state} disableButton />
           </div>
           <form className="col-7" onSubmit={this.handleSubmit}>
-            <h4>New Product:</h4>
+            <h4>{editing ? "Edit" : "New"} Product:</h4>
             <div className="col mb-4">
               <label className="form-label" htmlFor="password">
                 Name

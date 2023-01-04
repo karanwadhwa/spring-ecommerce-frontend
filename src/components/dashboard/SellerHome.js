@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getMyProducts } from "../../store/actions";
+import { getProductsBySellerId } from "../../store/actions";
 import NavBar from "../common/NavBar";
-import ProductCard from "./ProductCard";
+import ProductCard from "../products/ProductCard";
 
 class SellerHome extends Component {
   constructor(props) {
@@ -69,6 +69,6 @@ const mapStateToProps = (state) => ({
   allItems: state.products.allItems,
 });
 
-const mapDispatchToProps = { getMyProducts };
+const mapDispatchToProps = { getMyProducts: getProductsBySellerId };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SellerHome);

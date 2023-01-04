@@ -3,6 +3,7 @@ import { apiURL } from "../../variable";
 import {
   ADD_TO_CART,
   ADD_TO_ORDERS,
+  API_ERROR,
   CLEAR_CART,
   REMOVE_FROM_CART,
   SET_ALL_PRODUCTS,
@@ -21,7 +22,7 @@ export const getAllProducts = () => (dispatch) => {
     });
 };
 
-export const getMyProducts = (sellerid) => (dispatch) => {
+export const getProductsBySellerId = (sellerid) => (dispatch) => {
   axios
     .get(`${apiURL}/product/find-by-seller/${sellerid}`)
     .then((response) => {
@@ -85,13 +86,38 @@ export const getAllOrders = (userid) => (dispatch) => {
 export const createProduct = (product) => (dispatch) => {
   axios
     .post(`${apiURL}/product/create`, product)
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
+    .then((response) => {
+      getProductsBySellerId(product.seller);
+      console.log(response);
+    })
+    .catch((error) => {
+      dispatch({
+        type: API_ERROR,
+        payload:
+          error.response?.data?.error ??
+          "Failed to save product. Please try again.",
+      });
+      setTimeout(() => dispatch({ type: API_ERROR, payload: "" }), 5000);
+      console.log(error);
+    });
 };
 
 export const updateProduct = (product) => (dispatch) => {
   axios
     .put(`${apiURL}/product/update`, product)
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
+    .then((response) => {
+      getProductsBySellerId(product.seller);
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+
+      dispatch({
+        type: API_ERROR,
+        payload:
+          error.response?.data?.error ??
+          "Failed to save product. Please try again.",
+      });
+      setTimeout(() => dispatch({ type: API_ERROR, payload: "" }), 5000);
+    });
 };

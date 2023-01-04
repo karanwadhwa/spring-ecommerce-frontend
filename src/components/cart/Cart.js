@@ -41,21 +41,31 @@ class Cart extends Component {
     <li className="list-group-item" key={item.id.toString()}>
       <div className="row mt-3 mb-3">
         <div className="col-auto">
-          <img
-            src={
-              item.thumbnail_url ??
-              "https://curbside.ph/assets/uploads/2022/06/curbside-ph.jpg"
-            }
-            alt="product_image"
-            className="img-thumbnail rounded float-start"
-            style={{ maxWidth: 100 }}
-          />
+          <Link
+            to={`/product/${item.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <img
+              src={
+                item.thumbnail_url ??
+                "https://curbside.ph/assets/uploads/2022/06/curbside-ph.jpg"
+              }
+              alt="product_image"
+              className="img-thumbnail rounded float-start"
+              style={{ maxWidth: 100 }}
+            />
+          </Link>
         </div>
         <div className="col-auto me-auto">
           <span className="badge rounded-pill text-bg-warning text-capitalize">
             {item.category}
           </span>
-          <h5>{item.name}</h5>
+          <Link
+            to={`/product/${item.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <h5>{item.name}</h5>
+          </Link>
           <button
             type="button"
             className="btn btn-outline-danger btn-sm mt-2"
@@ -78,10 +88,11 @@ class Cart extends Component {
             </button>
             <button type="button" className="btn" disabled>
               {item.cartQuantity}
-            </button>{" "}
+            </button>
             <button
               type="button"
               className="btn btn-success"
+              disabled={item.cartQuantity >= item.quantity}
               onClick={() => this.props.addToCart(item, item.cartQuantity + 1)}
             >
               +
@@ -105,6 +116,20 @@ class Cart extends Component {
       <div className="container mb-4">
         <NavBar />
         <div className="h3">Cart</div>
+        {cart.length === 0 && (
+          <div
+            className="text-center"
+            style={{ marginTop: "7%", marginBottom: "7%" }}
+          >
+            <span>You do not have any items in your cart!</span>
+            <br />
+            <Link to="/">
+              <button type="button" className="btn btn-outline-primary mt-3">
+                Continue Shopping
+              </button>
+            </Link>
+          </div>
+        )}
         <ul className="list-group list-group-flush">
           {cart.map(this.renderItem)}
         </ul>
@@ -139,7 +164,11 @@ class Cart extends Component {
                 className="btn btn-outline-primary mt-4 col-3 ms-auto me-2"
                 onClick={() =>
                   orderCheckout(
-                    { cartTotal, items: cart, address },
+                    {
+                      cartTotal,
+                      items: cart,
+                      address: `${address.apt}, ${address.street}, ${address.city}, ${address.country} - ${address.pin}`,
+                    },
                     user.userid
                   )
                 }
